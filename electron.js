@@ -1,19 +1,31 @@
-const electron = require('electron');
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
+const { app, BrowserWindow, ipcMain } = require('electron');
+const shapefile = require("shapefile");
+const ArcGIS = require("terraformer-arcgis-parser");
 const server = require('./app');
+
+const fs = require('fs');
 
 const path = require('path');
 const url = require('url');
 
 let mainWindow;
 
-function createWindow () {
-    mainWindow = new BrowserWindow({ width: 800, height: 600 });
+function createWindow() {
+    mainWindow = new BrowserWindow(
+        {
+            width: 1000,
+            height: 750,
+            'minHeight': 750,
+            'minWidth': 1000,
+            webPreferences: {
+                nodeIntegration: true
+            }
+        }
+    );
 
     mainWindow.loadURL('http://localhost:5000/');
     // mainWindow.loadURL(url.format({
-    //     pathname: path.join(__dirname, 'index.html'),
+    //     pathname: path.join(__dirname, 'public', 'index.html'),
     //     protocol: 'file:',
     //     slashes: true
     // }));
@@ -27,6 +39,22 @@ function createWindow () {
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         mainWindow = null;
+    });
+    //Shapefile upload
+    ipcMain.on("upload-shp", (event, arg) => {
+        const results = [];
+        shapefile.open(arg)
+            .then(source => source.read()
+                .then(function log(result) {
+                    if (result.done) {
+                        win.webContents.send("load-shp", results);
+                    }
+                    else {
+                        results.push(ArcGIS.convert(result.value));
+                        return source.read().then(log);
+                    }
+                }))
+            .catch(error => console.error(error.stack));
     });
 }
 

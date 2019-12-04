@@ -6,3 +6,181 @@
 @import '/components/buttons.css';
 @import '/components/forms.css';
 @import '/components/helpers.css';
+
+
+.nav {
+  position: sticky;
+
+}
+
+.wrapper {
+  background-color:white;
+  margin: auto;
+  padding: 40px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px #000;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  width: 500px;
+  height: 430px;
+}
+
+.wrapper:before {
+  background-image: url('../assets/subd.jpg');
+  background-size: cover;
+  content: "";
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  z-index: -1;
+  display: block;
+  filter: blur(3px);
+}
+.leaflet-container {
+  height: 400px;
+  width: 100%;
+}
+
+.wrapper .header-text {
+  font-size: 32px;
+  font-weight: 600;
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+.wrapper input {
+  padding: 10px;
+  margin: 10px 0px;
+  border-radius: 5px;
+  width: 100%;
+  font-size: 16px;
+  font-family: poppins;
+}
+
+.wrapper input[type=checkbox] {
+  display: none;
+}
+
+.wrapper label {
+  position: relative;
+  margin-left: 5px;
+  margin-right: 10px;
+  top: 5px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+
+}
+
+.wrapper label:before {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  position: absolute;
+  left: 0px;
+  bottom: 1px;
+  background-color: #ddd;
+
+}
+
+.wrapper input[type=checkbox]:checked+label:before {
+  content: '\2713';
+  font-size: 20px;
+  color: #262626;
+  text-align: center;
+  line-height: 20px;
+}
+
+.wrapper span {
+  font-size: 14px;
+}
+
+.wrapper button {
+  background-color: #fb5a2f;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  padding: 10px;
+  margin: 20px 0px;
+}
+
+span a {
+  color: #ddd;
+}
+
+main {
+
+}
+
+.sidenav {
+  height: 100%;
+  /* Full-height: remove this if you want "auto" height */
+  position: relative;
+  /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1;
+  /* Stay on top */
+  top: 0;
+  /* Stay at the top */
+  left: 0;
+  bottom:0;
+  /* background-color: #111; Black */
+  overflow-x: hidden;
+  /* Disable horizontal scroll */
+  padding-top: 20px;
+  margin-right: 20px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Style page content */
+.main {
+  margin-left: 160px;
+  /* Same as the width of the sidebar */
+  padding: 0px 10px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+
+  .sidenav a {
+    font-size: 18px;
+  }
+}
+
+
+.card-columns {
+  column-count: 5 !important;
+}
+
+@media (min-width:576px) {
+  .card-columns {
+    column-count: 5 !important;
+    margin: 5px;
+  }
+}

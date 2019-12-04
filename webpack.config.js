@@ -1,4 +1,6 @@
+const webpack = require('webpack');
 const path = require('path');
+const fs=require('fs');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -15,10 +17,18 @@ module.exports = {
         rules: [{
             test: /\.(js|jsx)$/,
             exclude: /node_modules/,
-            loader: 'babel-loader',
+            loader: require.resolve('babel-loader'),
             options: {
                 // plugins: ['lodash'],
-                presets: ['react', 'es2015']
+                presets: [
+                    "@babel/preset-env",
+                    "@babel/preset-react"
+                ],
+                plugins: [
+                    [
+                        "@babel/plugin-proposal-class-properties"
+                    ]
+                ],
             }
         }, {
             test: /\.css$/,
@@ -26,7 +36,13 @@ module.exports = {
         }, {
             test: /\.(png|jpg|jpeg|gif|svg)$/,
             loader: 'file-loader?limit=8192&name=assets/[name].[ext]?[hash]'
+        },{
+            test:/\.(zip|shp)$/,
+            loader:'file-loader?name=assets/gis/[name].[ext]?[hash]'
         }]
+    },
+    devServer: {
+        historyApiFallback: true,
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -34,8 +50,15 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             { from: './app/favicon.ico' },
-            { from: './app/assets', to: 'assets' }
-        ])
+            { from: './app/assets', to: 'assets' },
+        ]),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+            }
+        })
     ],
-    devtool: 'eval'
+    devtool: 'eval',
+    target: 'electron-main'
+
 };
