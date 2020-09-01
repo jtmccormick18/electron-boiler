@@ -1,6 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
-const shapefile = require("shapefile");
-const ArcGIS = require("terraformer-arcgis-parser");
+
 const server = require('./app');
 
 const fs = require('fs');
@@ -40,22 +39,7 @@ function createWindow() {
         // when you should delete the corresponding element.
         mainWindow = null;
     });
-    //Shapefile upload
-    ipcMain.on("upload-shp", (event, arg) => {
-        const results = [];
-        shapefile.open(arg)
-            .then(source => source.read()
-                .then(function log(result) {
-                    if (result.done) {
-                        win.webContents.send("load-shp", results);
-                    }
-                    else {
-                        results.push(ArcGIS.convert(result.value));
-                        return source.read().then(log);
-                    }
-                }))
-            .catch(error => console.error(error.stack));
-    });
+    
 }
 
 // This method will be called when Electron has finished

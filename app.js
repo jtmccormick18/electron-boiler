@@ -1,11 +1,9 @@
 const express = require('express');
-const logger = require('morgan');
+
 const path = require('path');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
-var serveStatic = require('serve-static');
-var multer= require("multer");
-const fileUpload = require('express-fileupload');
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -32,7 +30,7 @@ require('./routes/api-routes')(app);
 //     })
 // })
 
-db.sequelize.sync().then(function () {
+db.sequelize.authenticate().then(function () {
     app.listen(PORT, function () {
         console.log(`App listening on PORT ${PORT}`);
     });
